@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ticket_view_form_inherit_custom" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.view.form.inherit.custom</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='channel_id']" position="before">
+                <field name="fecha_solicitud"/>
+                <field name="consumidor"/>
+            </xpath>
+            <xpath expr="//field[@name='sequence']" position="replace">
+                <field name="hora_inicio"/>
+                <field name="hora_fin"/>
+                <field name="num_horas"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Respuesta al Usuario" name="respuesta_usuario">
+                    <field name="respuesta_usuario" widget="html"/>
+                </page>
+                <page string="Descripción de la Solución" name="descripcion_solucion">
+                    <field name="descripcion_solucion" widget="html"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ticket_view_list_inherit_custom" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.view.list.inherit.custom</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="replace">
+                <list>
+                    <field
+                            name="stage_id"
+                            widget="badge"
+                            decoration-success="not unattended and not closed"
+                            decoration-info="unattended == True"
+                            decoration-muted="closed == True"
+                    />
+                    <field name="user_id" optional="show" widget="many2one_avatar_user"/>
+
+                    <field name="partner_name" optional="show"/>
+                    <field
+                            name="tag_ids"
+                            widget="many2many_tags"
+                            options="{'color_field': 'color'}"
+                            optional="show"
+                    />
+                    <field name="number" decoration-bf="1"/>
+                    <field name="fecha_solicitud"/>
+                    <field name="partner_email"/>
+                    <field name="consumidor"/>
+                    <field name="name"/>
+                    <field name="hora_inicio"/>
+                    <field name="hora_fin"/>
+                    <field name="num_horas"/>
+
+                    <field name="priority" widget="priority"/>
+
+                    <field name="category_id" optional="hide"/>
+                    <field name="unattended" column_invisible="1"/>
+                    <field name="closed" column_invisible="1"/>
+
+                    <field
+                            name="create_date"
+                            widget="remaining_days"
+                            readonly="1"
+                            optional="show"
+                    />
+                    <field
+                            name="last_stage_update"
+                            widget="remaining_days"
+                            optional="show"
+                    />
+
+                </list>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_kanban_inherit_custom" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.kanban.inherit.custom</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.view_helpdesk_ticket_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="fecha_solicitud"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
