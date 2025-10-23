@@ -1,5 +1,5 @@
 {
-    'name': 'Gestión Académica',
+    'name': 'Helpdesk SF',
     'version': '1.0',
     'summary': 'Gestionar instituciones, carreras, estudiantes y actividades económicas',
     'category': 'Educación',
