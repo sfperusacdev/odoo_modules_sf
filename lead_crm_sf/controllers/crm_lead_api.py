@@ -13,7 +13,7 @@ class CrmLeadApi(http.Controller):
         env = request.env['crm.lead'].with_user(user).sudo()
 
         lead = env.create({
-            'name': payload.get('name'),
+            'name': payload.get('name') or 'Lead desde API',
             'contact_name': payload.get('contact_name'),
             'email_from': payload.get('email'),
             'phone': payload.get('phone'),
@@ -21,4 +21,3 @@ class CrmLeadApi(http.Controller):
         })
 
         return {'id': lead.id}
-
