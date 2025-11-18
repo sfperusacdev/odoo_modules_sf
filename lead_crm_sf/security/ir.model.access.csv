@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+api_key_user,api_key_user,model_api_key,,1,0,0,0
+api_key_manager,api_key_manager,model_api_key,base.group_system,1,1,1,1

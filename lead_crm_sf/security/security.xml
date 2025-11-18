@@ -1,0 +1,13 @@
+<odoo>
+    <record id="group_api_key_manager" model="res.groups">
+        <field name="name">API Key Manager</field>
+        <field name="category_id" ref="base.module_category_administration"/>
+    </record>
+
+    <record id="api_key_rule" model="ir.rule">
+        <field name="name">Api Key: Manager rule</field>
+        <field name="model_id" ref="model_api_key"/>
+        <field name="groups" eval="[(4, ref('group_api_key_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+</odoo>
