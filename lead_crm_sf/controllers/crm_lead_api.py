@@ -9,11 +9,16 @@ class CrmLeadApi(http.Controller):
         if not api_key or not request.env['api.key'].sudo().search([('key', '=', api_key)]):
             return {'error': 'Invalid API Key'}
 
-        lead = request.env['crm.lead'].sudo().create({
+        user = request.env.ref('base.user_admin')
+        env = request.env['crm.lead'].with_user(user).sudo()
+
+        lead = env.create({
             'name': payload.get('name'),
             'contact_name': payload.get('contact_name'),
             'email_from': payload.get('email'),
             'phone': payload.get('phone'),
             'description': payload.get('description'),
         })
+
         return {'id': lead.id}
+
