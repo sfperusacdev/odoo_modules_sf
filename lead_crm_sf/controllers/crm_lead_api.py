@@ -4,7 +4,7 @@ import json
 
 class CrmLeadApi(http.Controller):
 
-    @http.route('/api/crm/lead', auth='none', type='http', methods=['POST'], csrf=False)
+    @http.route('/api/crm/lead', auth='public', methods=['POST'], csrf=False)
     def create_lead(self):
         api_key = request.httprequest.headers.get('X-API-KEY')
         if not api_key or not request.env['api.key'].sudo().search([('key', '=', api_key)]):
