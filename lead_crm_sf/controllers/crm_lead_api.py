@@ -1,15 +1,19 @@
 from odoo import http
 from odoo.http import request
+import json
 
 class CrmLeadApi(http.Controller):
 
-    @http.route('/api/crm/lead', auth='none', type='json', methods=['POST'], csrf=False)
-    def create_lead(self, **kw):
-        data = request.jsonrequest
-
+    @http.route('/api/crm/lead', auth='none', type='http', methods=['POST'], csrf=False)
+    def create_lead(self):
         api_key = request.httprequest.headers.get('X-API-KEY')
         if not api_key or not request.env['api.key'].sudo().search([('key', '=', api_key)]):
-            return {'error': 'Invalid API Key'}
+            return request.make_json_response({"error": "Invalid API Key"}, status=401)
+
+        try:
+            data = json.loads(request.httprequest.data.decode('utf-8'))
+        except:
+            return request.make_json_response({"error": "Invalid JSON"}, status=400)
 
         user = request.env.ref('base.user_admin')
         env = request.env['crm.lead'].with_user(user).sudo()
@@ -22,4 +26,4 @@ class CrmLeadApi(http.Controller):
             'description': data.get('description'),
         })
 
-        return {'id': lead.id}
+        return request.make_json_response({"id": lead.id})
